@@ -6,18 +6,45 @@ const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 );
 
-const Stats = (props) => {
-  if (props.percent) {
-    return (
-      <p>
-        {props.text} {props.count} %
-      </p>
-    );
+const Statistics = (props) => {
+  if (props.good + props.bad + props.neutral === 0) {
+    return <p>No feedback given</p>;
   }
   return (
-    <p>
-      {props.text} {props.count}
-    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>good</td>
+          <td>{props.good}</td>
+        </tr>
+        <tr>
+          <td>neutral</td>
+          <td>{props.neutral}</td>
+        </tr>
+        <tr>
+          <td>bad</td>
+          <td>{props.bad}</td>
+        </tr>
+        <tr>
+          <td>all</td>
+          <td>{props.good + props.bad + props.neutral}</td>
+        </tr>
+        <tr>
+          <td>average</td>
+          <td>
+            {(props.good - props.bad) /
+              (props.good + props.neutral + props.bad)}
+          </td>
+        </tr>
+        <tr>
+          <td>positive</td>
+          <td>
+            {(props.good - props.bad) /
+              (props.good + props.neutral + props.bad)}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 
@@ -39,16 +66,8 @@ const App = () => {
       <Button handleClick={increaseGood} text="good" />
       <Button handleClick={increaseNeutral} text="neutral" />
       <Button handleClick={increaseBad} text="bad" />
-      <Stats text="good" count={good} />
-      <Stats text="neutral" count={neutral} />
-      <Stats text="bad" count={bad} />
-      <Stats text="all" count={good + neutral + bad} />
-      <Stats text="average" count={(good - bad) / (good + neutral + bad)} />
-      <Stats
-        percent="true"
-        text="positive"
-        count={good / (good + neutral + bad)}
-      />
+      <Header text="statistics" />
+      <Statistics good={good} bad={bad} neutral={neutral} />
     </div>
   );
 };
