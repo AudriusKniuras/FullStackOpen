@@ -11,13 +11,13 @@ const Form = (props) => {
 
     const obj = {
       name: props.newName,
-      phone: props.newPhone,
+      number: props.newNumber,
       id: props.persons.length + 1,
     };
 
     props.setPersons(props.persons.concat(obj));
     props.setNewName("");
-    props.setNewPhone("");
+    props.setNewNumber("");
 
   };
 
@@ -25,8 +25,8 @@ const Form = (props) => {
     props.setNewName(event.target.value);
   };
 
-  const handlePhoneInput = (event) => {
-    props.setNewPhone(event.target.value);
+  const handleNumberInput = (event) => {
+    props.setNewNumber(event.target.value);
   };
 
   return (
@@ -35,7 +35,7 @@ const Form = (props) => {
         name: <input value={props.newName} onChange={handleNameInput} />
       </div>
       <div>
-        number: <input value={props.newPhone} onChange={handlePhoneInput} />
+        number: <input value={props.newNumber} onChange={handleNumberInput} />
       </div>
       <div>
         <button type="submit">add</button>

@@ -15,7 +15,7 @@ const Filter = ({persons, setNewNameFilter, newNameFilter}) => {
       <ul>
         {personsToShow.map((person) => (
           <li key={person.id}>
-            {person.name} {person.phone}
+            {person.name} {person.number}
           </li>
         ))}
       </ul>
