@@ -23,6 +23,33 @@ function CountryFormatter(props) {
   )
 }
 
+function CountryExpander(props) {
+  const country = props.country;
+  const [visible, setVisible] = useState(false);
+
+  const handleShowbutton = () => {
+    if (visible) {
+      setVisible(false)
+    } else {
+      setVisible(true)
+    }
+  }
+
+  if (!visible) {
+    return (
+      <div>
+        {country.name.common} <button onClick={handleShowbutton}>Show</button>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        {country.name.common} <button onClick={handleShowbutton}>Hide</button>
+        <CountryFormatter country={country} />
+      </div>
+    )
+  }
+}
 
 function Filter(props) {
   const countriesToShow = props.countryResult.filter((country) =>
@@ -39,7 +66,7 @@ function Filter(props) {
     return (
       <div>
         {countriesToShow.map((country) => (
-          <p key={country.name.common}>{country.name.common}</p>
+          <CountryExpander key={country.name.common} country={country} />
         ))}
       </div>
     );
