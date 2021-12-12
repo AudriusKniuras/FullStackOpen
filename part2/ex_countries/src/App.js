@@ -1,6 +1,40 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+function WeatherFormatter(props) {
+  const country = props.country;
+  const [weather, setWeather] = useState({})
+
+  const api_key = process.env.REACT_APP_API_KEY
+
+  useEffect(() => {
+    axios
+      .get(`http://api.openweathermap.org/data/2.5/weather?q=${country.capital}&units=metric&appid=${api_key}`)
+      .then(response => setWeather(response.data))
+  }, [api_key, country.capital])
+  if (Object.keys(weather).length === 0) {
+    return (
+      <div>
+        <p>Fetching weather data...</p>
+      </div>
+    )
+  } else {
+    console.log(weather)
+    const url = weather.weather[0].icon
+    console.log("icon url", url)
+    return (
+      <div>
+        <h2>Weather in {country.capital}</h2>
+        <p><b>Temperature:</b> {weather.main.temp} C</p>
+        <p><b>Feels like:</b> {weather.main.feels_like} C</p>
+        <p><b>{weather.weather.main}</b></p>
+        <img alt="weatherIcon" src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}></img>
+        <p><b>Wind: </b>{weather.wind.speed} m/s</p>
+      </div>
+    )
+  }
+}
+
 function CountryFormatter(props) {
   const country = props.country;
 
@@ -19,6 +53,7 @@ function CountryFormatter(props) {
         ))}
       </ul>
       <img src={flag} alt="" />
+      <WeatherFormatter country={country} />
     </div>
   )
 }
