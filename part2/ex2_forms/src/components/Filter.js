@@ -1,4 +1,6 @@
-const Filter = ({persons, setNewNameFilter, newNameFilter}) => {
+import db from "../services/db";
+
+const Filter = ({ persons, setNewNameFilter, newNameFilter, setPersons }) => {
   const handleNameFilterInput = (event) => {
     setNewNameFilter(event.target.value);
   };
@@ -6,6 +8,16 @@ const Filter = ({persons, setNewNameFilter, newNameFilter}) => {
   const personsToShow = persons.filter((person) =>
     person.name.includes(newNameFilter)
   );
+
+  const handleDelete = (person) => {
+    if (window.confirm(`Do you want to delete entry: ${person.name}?`)) {
+      db.deleteEntry(person.id)
+        .then(() => console.log("Successfully deleted"))
+        .catch((error) => alert(`Could not delete entry\n${error}`));
+
+      setPersons(persons.filter(p => p.id !== person.id))
+    }
+  };
 
   return (
     <div>
@@ -15,7 +27,8 @@ const Filter = ({persons, setNewNameFilter, newNameFilter}) => {
       <ul>
         {personsToShow.map((person) => (
           <li key={person.id}>
-            {person.name} {person.number}
+            {person.name} {person.number}{" "}
+            <button onClick={() => handleDelete(person)}>delete</button>
           </li>
         ))}
       </ul>

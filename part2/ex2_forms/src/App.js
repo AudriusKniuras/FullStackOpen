@@ -31,6 +31,7 @@ const App = () => {
         persons={persons}
         setNewNameFilter={setNewNameFilter}
         newNameFilter={newNameFilter}
+        setPersons={setPersons}
       />
     </div>
   );

@@ -1,8 +1,12 @@
+import db from "../services/db"
+
 const Form = (props) => {
   const handleSetPerson = (event) => {
     event.preventDefault();
 
-    const entryExists = props.persons.find((person) => person.name === props.newName);
+    const entryExists = props.persons.find(
+      (person) => person.name === props.newName
+    );
 
     if (entryExists !== undefined) {
       alert(`${props.newName} already exists in the phonebook`);
@@ -12,13 +16,13 @@ const Form = (props) => {
     const obj = {
       name: props.newName,
       number: props.newNumber,
-      id: props.persons.length + 1,
     };
 
-    props.setPersons(props.persons.concat(obj));
-    props.setNewName("");
-    props.setNewNumber("");
-
+    db.create(obj).then(responseData => {
+      props.setPersons(props.persons.concat(responseData))
+      props.setNewName("")
+      props.setNewNumber("")
+    }).catch(error => alert(`Item could not be added. \n${error}`))
   };
 
   const handleNameInput = (event) => {
@@ -41,7 +45,7 @@ const Form = (props) => {
         <button type="submit">add</button>
       </div>
     </form>
-  )
-}
+  );
+};
 
 export default Form;
