@@ -4,25 +4,30 @@ const Form = (props) => {
   const handleSetPerson = (event) => {
     event.preventDefault();
 
-    const entryExists = props.persons.find(
+    const existingPerson = props.persons.find(
       (person) => person.name === props.newName
     );
-
-    if (entryExists !== undefined) {
-      alert(`${props.newName} already exists in the phonebook`);
-      return;
-    }
 
     const obj = {
       name: props.newName,
       number: props.newNumber,
     };
 
-    db.create(obj).then(responseData => {
-      props.setPersons(props.persons.concat(responseData))
-      props.setNewName("")
-      props.setNewNumber("")
-    }).catch(error => alert(`Item could not be added. \n${error}`))
+    if (existingPerson !== undefined) {
+      if (window.confirm(`${existingPerson.name} already exists in the phonebook. Replace number?`)) {
+        db.update(existingPerson.id, obj).then(responseData => {
+          props.setPersons(props.persons.map(person => person.id === responseData.id ? responseData : person))
+          props.setNewName("")
+          props.setNewNumber("")
+        }).catch(error => alert(`Item could not be added. \n${error}`))
+      }
+    } else {
+      db.create(obj).then(responseData => {
+        props.setPersons(props.persons.concat(responseData))
+        props.setNewName("")
+        props.setNewNumber("")
+      }).catch(error => alert(`Item could not be added. \n${error}`))
+    }
   };
 
   const handleNameInput = (event) => {
