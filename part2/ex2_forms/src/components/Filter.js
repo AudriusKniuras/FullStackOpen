@@ -1,6 +1,13 @@
 import db from "../services/db";
 
-const Filter = ({ persons, setNewNameFilter, newNameFilter, setPersons }) => {
+const Filter = ({
+  persons,
+  setNewNameFilter,
+  newNameFilter,
+  setPersons,
+  setResponseStatus,
+  setMessage,
+}) => {
   const handleNameFilterInput = (event) => {
     setNewNameFilter(event.target.value);
   };
@@ -13,9 +20,15 @@ const Filter = ({ persons, setNewNameFilter, newNameFilter, setPersons }) => {
     if (window.confirm(`Do you want to delete entry: ${person.name}?`)) {
       db.deleteEntry(person.id)
         .then(() => console.log("Successfully deleted"))
-        .catch((error) => alert(`Could not delete entry\n${error}`));
-
-      setPersons(persons.filter(p => p.id !== person.id))
+        .catch((error) => {
+          setResponseStatus("error");
+          setMessage(`Could not delete entry\n${error}`);
+          setTimeout(() => {
+            setResponseStatus("");
+            setMessage("");
+          }, 5000);
+        });
+      setPersons(persons.filter((p) => p.id !== person.id));
     }
   };
 
