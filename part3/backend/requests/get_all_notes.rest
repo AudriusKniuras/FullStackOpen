@@ -1,0 +1,25 @@
+GET http://localhost:3001/api/notes
+
+###
+
+GET http://localhost:3001/api/notes/1
+
+###
+
+DELETE http://localhost:3001/api/notes/1
+
+###
+
+POST http://localhost:3001/api/notes
+content-type: application/json
+
+{
+    "content": "new note",
+    "date": "2019-05-30T17:30:31.098Z",
+    "important": false,
+    "somethingelse": true
+}
+
+###
+
+GET http://localhost:3001/fakelink
