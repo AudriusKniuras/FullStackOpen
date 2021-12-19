@@ -11,7 +11,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/persons")
+      .get("/api/persons")
       .then((response) => setPersons(response.data))
       .catch((error) => {
         setResponseStatus("error");
@@ -25,7 +25,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2>Phonebook!</h2>
       <Message message={message} responseStatus={responseStatus} />
       <Form
         persons={persons}

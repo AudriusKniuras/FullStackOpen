@@ -5,14 +5,21 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "mongo": "node mongo.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../../part2/tutorial2_forms && npm run build && cp -r build ../../part3/backend/",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push origin master && npm run deploy",
+    "logs:prod": "heroku logs --app secure-journey-23480 --tail"
   },
   "author": "Audrius",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
