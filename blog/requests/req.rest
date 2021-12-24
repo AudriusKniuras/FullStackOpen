@@ -1,0 +1,30 @@
+GET http://localhost:3003/api/blogs
+
+###
+
+GET http://localhost:3003/api/blogs/61bef41feab98beeddb102ee
+
+###
+
+DELETE http://localhost:3003/api/blogs/61bf1ee16af4ba2fea1fa130
+
+###
+
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+    {
+      "title": "First blog",
+      "author": "who knows",
+      "url": "https://google.com",
+      "likes": 15
+    }
+
+###
+
+PUT http://localhost:3003/api/blogs/61bef41feab98beeddb102ee
+Content-Type: application/json
+
+  {
+    "number": "123-456"
+  }
