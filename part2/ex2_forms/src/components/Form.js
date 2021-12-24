@@ -59,7 +59,9 @@ const Form = (props) => {
         })
         .catch((error) => {
           props.setResponseStatus("error");
-          props.setMessage(`Item cold not be added. \n${error}`);
+          props.setMessage(
+            `Item cold not be added. \n${error.response.data.error}`
+          );
           setTimeout(() => {
             props.setResponseStatus("");
             props.setMessage("");
